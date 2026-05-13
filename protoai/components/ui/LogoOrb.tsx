@@ -14,20 +14,27 @@ export function LogoOrb({ size = "small", onClick, className = "" }: LogoOrbProp
     <button
       onClick={onClick}
       type="button"
-      className={`relative flex items-center justify-center rounded-full bg-[var(--accent-gradient)] hover:scale-105 transition-transform duration-200 ease-in-out shrink-0 ${dimensions} ${className}`}
+      className={`relative flex items-center justify-center rounded-full overflow-hidden hover:scale-105 transition-transform duration-200 ease-in-out shrink-0 ${dimensions} ${className}`}
       aria-label="Open ProtoAI"
+      style={{
+        background: "radial-gradient(circle at 30% 30%, #4facfe 0%, #00f2fe 100%), radial-gradient(circle at 70% 70%, #f093fb 0%, #f5576c 100%)",
+        backgroundBlendMode: "screen"
+      }}
     >
+      <div className="absolute inset-0 bg-gradient-to-br from-[#4facfe] via-[#f093fb] to-[#f5576c] opacity-80" />
       <svg
         width={iconSize}
         height={iconSize}
         viewBox="0 0 24 24"
         fill="none"
         stroke="white"
-        strokeWidth="2"
+        strokeWidth="1.8"
         strokeLinecap="round"
         strokeLinejoin="round"
+        className="relative z-10"
       >
-        <path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4L12 2z" />
+        <path d="M12 3c.5 4.5 4.5 8.5 9 9-4.5.5-8.5 4.5-9 9-.5-4.5-4.5-8.5-9-9 4.5-.5 8.5-4.5 9-9z" />
+        <path d="M15 15l3 3m0 0l-1-2m1 2l-2-1" />
       </svg>
     </button>
   );

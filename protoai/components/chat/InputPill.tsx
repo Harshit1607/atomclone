@@ -31,27 +31,27 @@ export function InputPill({
 
   return (
     <div
-      className={`flex items-center h-[56px] bg-[var(--bg-elevated)] border rounded-[28px] pl-2 pr-2 transition-all duration-300 ease-[cubic-bezier(0.32,0,0.15,1)] ${
-        isFocused
-          ? "w-[680px] border-[#3A3A3A]"
-          : "w-[520px] border-[var(--border)]"
+      className={`flex items-center h-[72px] bg-[#1a1a1a] border border-[#333333] px-4 transition-all duration-300 ease-[cubic-bezier(0.32,0,0.15,1)] ${
+        isFocused ? "w-[680px] border-[#444444]" : "w-[560px]"
       } ${className}`}
     >
-      <LogoOrb size="small" onClick={onOrbClick} className="mr-3 shrink-0" />
+      <LogoOrb size="small" onClick={onOrbClick} className="mr-4 shrink-0" />
       
-      <form onSubmit={handleSubmit} className="flex-1 flex items-center h-full">
-        <input
-          type="text"
-          value={value}
-          onChange={onChange}
-          onFocus={onFocus}
-          onBlur={onBlur}
-          placeholder="Ask anything..."
-          className="flex-1 bg-transparent border-none outline-none text-[var(--text-primary)] placeholder-[var(--text-muted)] font-mono text-[14px] leading-[1.7]"
-        />
+      <form onSubmit={handleSubmit} className="flex-1 flex items-center h-full gap-4">
+        <div className="flex-1 bg-[#262626] h-[44px] flex items-center px-4">
+          <input
+            type="text"
+            value={value}
+            onChange={onChange}
+            onFocus={onFocus}
+            onBlur={onBlur}
+            placeholder="Ask anything..."
+            className="flex-1 bg-transparent border-none outline-none text-[#999999] placeholder-[#555555] font-sans text-[16px]"
+          />
+        </div>
         <SendButton
           active={value.trim().length > 0}
-          className="ml-2 shrink-0"
+          className="shrink-0"
         />
       </form>
     </div>

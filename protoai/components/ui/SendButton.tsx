@@ -11,25 +11,23 @@ export function SendButton({ active, onClick, disabled, className = "" }: SendBu
       onClick={onClick}
       disabled={disabled || !active}
       type="submit"
-      className={`flex items-center justify-center w-8 h-8 rounded-full transition-colors duration-200 shrink-0 ${
-        active
-          ? "bg-[var(--accent-solid)] text-white"
-          : "bg-transparent text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
+      className={`flex items-center justify-center w-10 h-10 bg-[#333333] hover:bg-[#444444] text-white transition-colors duration-200 shrink-0 ${
+        active ? "opacity-100" : "opacity-50"
       } ${className}`}
       aria-label="Send message"
     >
       <svg
-        width="16"
-        height="16"
+        width="20"
+        height="20"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
-        strokeWidth="2"
+        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <line x1="5" y1="12" x2="19" y2="12" />
-        <polyline points="12 5 19 12 12 19" />
+        <path d="m22 2-7 20-4-9-9-4Z" />
+        <path d="M22 2 11 13" />
       </svg>
     </button>
   );
