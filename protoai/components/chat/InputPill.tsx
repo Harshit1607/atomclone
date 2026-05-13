@@ -4,7 +4,7 @@ import { SendButton } from "../ui/SendButton";
 interface InputPillProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onSubmit: () => void;
+  onSubmit: (e: React.FormEvent) => void;
   onOrbClick: () => void;
   isFocused: boolean;
   onFocus: () => void;
@@ -25,7 +25,7 @@ export function InputPill({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (value.trim()) {
-      onSubmit();
+      onSubmit(e);
     }
   };
 
