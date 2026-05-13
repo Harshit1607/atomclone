@@ -14,6 +14,8 @@ import { MessageBubble } from "./MessageBubble";
 import { TypingIndicator } from "./TypingIndicator";
 import { useProtoChat } from "@/hooks/useProtoChat";
 import { newSession } from "@/store/sessionSlice";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 export function ChatWidget({ apiEndpoint = DEFAULT_API_ENDPOINT }: ChatWidgetProps) {
   const dispatch = useDispatch();
@@ -25,6 +27,17 @@ export function ChatWidget({ apiEndpoint = DEFAULT_API_ENDPOINT }: ChatWidgetPro
   const { messages, input, handleInputChange, handleSubmit, isLoading, append } = useProtoChat({
     apiEndpoint,
   });
+
+  useGSAP(() => {
+    if (isExpanded && panelRef.current) {
+      gsap.fromTo(
+        panelRef.current,
+        { clipPath: "inset(50% 0 50% 0)", opacity: 0, y: 50 },
+        { clipPath: "inset(0% 0 0% 0)", opacity: 1, y: 0, duration: 0.48, ease: "power3.out" }
+      );
+    }
+  }, [isExpanded]);
+
 
   const handleExpand = () => {
     setIsExpanded(true);
