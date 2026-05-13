@@ -1,5 +1,6 @@
 import { Message } from "ai-elements";
 import type { Message as AIMessage } from "ai";
+import { motion } from "framer-motion";
 
 interface MessageBubbleProps {
   message: AIMessage;
@@ -10,7 +11,12 @@ export function MessageBubble({ message, isStreaming }: MessageBubbleProps) {
   const isUser = message.role === "user";
   
   return (
-    <div className={`flex w-full ${isUser ? "justify-end" : "justify-start"}`}>
+    <motion.div 
+      layout
+      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      className={`flex w-full ${isUser ? "justify-end" : "justify-start"}`}
+    >
       <div
         className={`p-[12px_16px] font-mono text-[14px] leading-[1.7] ${
           isUser
@@ -20,6 +26,6 @@ export function MessageBubble({ message, isStreaming }: MessageBubbleProps) {
       >
         <Message message={message} />
       </div>
-    </div>
+    </motion.div>
   );
 }
