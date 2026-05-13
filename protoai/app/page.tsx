@@ -10,7 +10,8 @@ export default function Home() {
         The ProtoAI ChatWidget is active.
       </p>
 
-      <ChatWidget />
+      {/* Testing as a Web Component */}
+      <proto-ai-widget api-key={process.env.OPENAI_API_KEY}></proto-ai-widget>
     </main>
   );
 }

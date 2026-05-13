@@ -25,6 +25,7 @@ class ProtoAIWidget extends HTMLElement {
   }
 
   private render() {
+    console.log("ProtoAI Web Component Rendering...", { apiKey: this.getAttribute('api-key') });
     if (!this.root) {
       const mountPoint = document.createElement('div');
       mountPoint.id = 'protoai-root';
@@ -45,8 +46,9 @@ class ProtoAIWidget extends HTMLElement {
           z-index: 9999;
         }
         #protoai-root {
-          width: 100%;
-          height: 100%;
+          width: fit-content;
+          height: fit-content;
+          pointer-events: auto;
         }
       `;
       // Inherit styles from the host page

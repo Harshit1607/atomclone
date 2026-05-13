@@ -1,42 +1,7 @@
 import { UIMessage } from "ai";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Message, MessageContent, MessageResponse } from "@/components/ai-elements/message";
-import React, { useState, useEffect, useRef } from "react";
-
-function TypewriterResponse({ content, isStreaming }: { content: string; isStreaming?: boolean }) {
-  const [displayedContent, setDisplayedContent] = useState("");
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    if (!isStreaming) {
-      setDisplayedContent(content);
-      return;
-    }
-
-    if (content.length > displayedContent.length) {
-      const diff = content.length - displayedContent.length;
-      // Adjust typing speed based on how far behind we are
-      const speed = diff > 30 ? 2 : diff > 10 ? 8 : 15;
-      
-      timerRef.current = setTimeout(() => {
-        setDisplayedContent(content.slice(0, displayedContent.length + 1));
-      }, speed);
-    } else if (content.length < displayedContent.length) {
-      // Handle case where content might be reset or truncated
-      setDisplayedContent(content);
-    }
-
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
-  }, [content, displayedContent.length, isStreaming]);
-
-  return (
-    <MessageResponse isAnimating={isStreaming} className="text-white !text-white">
-      {displayedContent}
-    </MessageResponse>
-  );
-}
+import React from "react";
 
 interface MessageBubbleProps {
   message: UIMessage;
@@ -73,7 +38,7 @@ export function MessageBubble({ message, isStreaming, onSuggestionClick }: Messa
             <div className="flex flex-col gap-2 text-white !text-white">
               <Message from="assistant">
                 <MessageContent className="!text-white">
-                  <TypewriterResponse content={content} isStreaming={isStreaming} />
+                  <MessageResponse isAnimating={isStreaming} className="text-white !text-white">{content}</MessageResponse>
                 </MessageContent>
               </Message>
 

@@ -34,7 +34,7 @@ export function ChatPanel({ onClose, onNewChat, children, inputBar }: ChatPanelP
     if (container) {
       const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 300;
       if (isNearBottom || container.scrollTop === 0) {
-        scrollToBottom('smooth');
+        scrollToBottom('auto');
       }
     }
   }, [children]);

@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useChat } from "@ai-sdk/react";
-import { DefaultChatTransport } from "ai";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 
