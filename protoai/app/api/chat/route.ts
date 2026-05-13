@@ -1,4 +1,4 @@
-import { google } from "@ai-sdk/google";
+import { openai } from "@ai-sdk/openai";
 import { streamText } from "ai";
 import { SYSTEM_PROMPT } from "@/lib/constants";
 
@@ -8,7 +8,7 @@ export async function POST(req: Request) {
   const { messages } = await req.json();
 
   const result = await streamText({
-    model: google("gemini-1.5-flash"),
+    model: openai("gpt-oss-120b"),
     system: SYSTEM_PROMPT,
     messages,
   });
