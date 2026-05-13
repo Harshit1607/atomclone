@@ -24,3 +24,19 @@ body {
   color: var(--text-primary);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* AI Streaming Cursor */
+.message-streaming p:last-child::after {
+  content: "▋";
+  display: inline-block;
+  margin-left: 4px;
+  animation: blink 1s step-start infinite;
+  color: var(--text-primary);
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
