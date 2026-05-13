@@ -1,8 +1,9 @@
-import { Message } from "ai-elements";
+import { UIMessage } from "ai";
 import { motion } from "framer-motion";
+import { Message } from "@/components/ai-elements/message";
 
 interface MessageBubbleProps {
-  message: any;
+  message: UIMessage;
   isStreaming?: boolean;
 }
 
