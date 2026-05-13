@@ -1,9 +1,8 @@
 import { Message } from "ai-elements";
-import type { Message as AIMessage } from "ai/react";
 import { motion } from "framer-motion";
 
 interface MessageBubbleProps {
-  message: AIMessage;
+  message: any;
   isStreaming?: boolean;
 }
 
