@@ -29,7 +29,30 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Web Component Integration
+
+You can use ProtoAI as a standalone web component in any HTML page.
+
+### Usage
+
+1. **Register the Component**: Import the registration script in your entry point.
+   ```tsx
+   import '@/components/chat/register';
+   ```
+
+2. **Embed in HTML**:
+   ```html
+   <proto-ai-widget api-key="YOUR_OPENAI_API_KEY"></proto-ai-widget>
+   ```
+
+### API Key Configuration
+The component supports an optional `api-key` attribute. 
+- If provided: The widget will use this key for all AI requests.
+- If omitted: The widget will fallback to the server-side `OPENAI_API_KEY` environment variable.
+
+---
+
+## Deployment Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 

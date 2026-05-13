@@ -8,9 +8,10 @@ import { RootState } from "@/store";
 
 interface UseProtoChatOptions {
   apiEndpoint: string;
+  apiKey?: string;
 }
 
-export function useProtoChat({ apiEndpoint }: UseProtoChatOptions) {
+export function useProtoChat({ apiEndpoint, apiKey }: UseProtoChatOptions) {
   const sessionId = useSelector((state: RootState) => state.session.sessionId);
   const [input, setInput] = useState("");
 
@@ -18,6 +19,7 @@ export function useProtoChat({ apiEndpoint }: UseProtoChatOptions) {
     api: apiEndpoint,
     headers: {
       "x-session-id": sessionId,
+      ...(apiKey ? { "x-api-key": apiKey } : {}),
     },
   });
 

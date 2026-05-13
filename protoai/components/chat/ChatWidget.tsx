@@ -17,15 +17,27 @@ import { newSession } from "@/store/sessionSlice";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
-export function ChatWidget({ apiEndpoint = DEFAULT_API_ENDPOINT }: ChatWidgetProps) {
+interface ChatWidgetProps {
+  apiKey?: string;
+}
+
+export function ChatWidget({ apiKey }: ChatWidgetProps = {}) {
   const dispatch = useDispatch();
   const [isExpanded, setIsExpanded] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
   
   const panelRef = useRef<HTMLDivElement>(null);
 
-  const { messages, input, handleInputChange, handleSubmit, isLoading, append } = useProtoChat({
-    apiEndpoint,
+  const { 
+    messages, 
+    input, 
+    handleInputChange, 
+    handleSubmit, 
+    isLoading,
+    append 
+  } = useProtoChat({ 
+    apiEndpoint: DEFAULT_API_ENDPOINT,
+    apiKey 
   });
 
   useGSAP(() => {
