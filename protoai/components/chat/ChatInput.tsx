@@ -12,20 +12,22 @@ export function ChatInput({ value, onChange, onSubmit, disabled }: ChatInputProp
   return (
     <form 
       onSubmit={onSubmit}
-      className="flex items-center w-full max-w-[720px] mx-auto bg-[var(--bg-elevated)] border border-[var(--border)] rounded-[28px] h-[56px] pl-6 pr-2 focus-within:border-[#3A3A3A] transition-colors shadow-[0_-12px_24px_rgba(0,0,0,0.4)]"
+      className="flex items-center w-full bg-[#1a1a1a] border border-[#333333] h-[72px] px-4 transition-colors relative"
     >
-      <input
-        type="text"
-        value={value}
-        onChange={onChange}
-        disabled={disabled}
-        placeholder="Ask anything..."
-        className="flex-1 bg-transparent border-none outline-none text-[var(--text-primary)] placeholder-[var(--text-muted)] font-mono text-[14px] leading-[1.7]"
-      />
+      <div className="flex-1 bg-[#262626] h-[48px] flex items-center px-4">
+        <input
+          type="text"
+          value={value}
+          onChange={onChange}
+          disabled={disabled}
+          placeholder="Ask anything..."
+          className="flex-1 bg-transparent border-none outline-none text-[#999999] placeholder-[#555555] font-sans text-[16px]"
+        />
+      </div>
       <SendButton
         active={value.trim().length > 0}
         disabled={disabled}
-        className="ml-2 shrink-0"
+        className="ml-4 shrink-0"
       />
     </form>
   );

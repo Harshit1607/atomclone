@@ -15,12 +15,10 @@ export function useProtoChat({ apiEndpoint }: UseProtoChatOptions) {
   const [input, setInput] = useState("");
 
   const { messages, sendMessage, setMessages, status } = useChat({
-    transport: new DefaultChatTransport({
-      url: apiEndpoint,
-      headers: {
-        "x-session-id": sessionId,
-      },
-    }),
+    api: apiEndpoint,
+    headers: {
+      "x-session-id": sessionId,
+    },
   });
 
   // Hydrate from sessionStorage on mount or when sessionId changes
@@ -57,11 +55,15 @@ export function useProtoChat({ apiEndpoint }: UseProtoChatOptions) {
     if (!input.trim()) return;
     const msg = input;
     setInput("");
-    sendMessage({ role: "user", content: msg });
+    sendMessage({ role: "user", parts: [{ type: "text", text: msg }] });
   };
 
   const append = (msg: { role: "user"; content: string }) => {
-    sendMessage(msg);
+    try {
+      sendMessage({ role: "user", parts: [{ type: "text", text: msg.content }] });
+    } catch (e) {
+      console.error("SendMessage failed", e);
+    }
   };
 
   return {

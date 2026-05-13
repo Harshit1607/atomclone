@@ -9,41 +9,62 @@ interface ChatPanelProps {
 }
 
 export function ChatPanel({ onClose, onNewChat, children, inputBar }: ChatPanelProps) {
-  return (
-    <div className="flex flex-col h-full w-full max-w-[720px] mx-auto bg-[var(--bg-primary)] text-[var(--text-primary)]">
-      {/* Header */}
-      <div className="flex items-center justify-between px-5 py-4 shrink-0">
-        <div className="flex items-center gap-3">
-          <LogoOrb size="small" onClick={onClose} />
-          <span className="font-sans font-semibold text-[16px]">ProtoAI</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <button
-            onClick={onNewChat}
-            className="flex items-center justify-center w-8 h-8 rounded-full border border-[var(--border)] text-[var(--text-primary)] hover:bg-[var(--bg-surface)] transition-colors"
-            aria-label="New Chat"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-          </button>
-          <button
-            className="px-4 py-1.5 text-[13px] font-sans font-semibold text-[var(--bg-primary)] bg-[var(--text-primary)] rounded-full hover:opacity-90 transition-opacity"
-          >
-            Apply
-          </button>
-        </div>
-      </div>
+  const [showScrollButton, setShowScrollButton] = React.useState(false);
+  const scrollRef = React.useRef<HTMLDivElement>(null);
 
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+    // Show button if we're more than 200px from the bottom
+    setShowScrollButton(scrollHeight - scrollTop - clientHeight > 200);
+  };
+
+  const scrollToBottom = (behavior: ScrollBehavior = 'smooth') => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({
+        top: scrollRef.current.scrollHeight,
+        behavior
+      });
+    }
+  };
+
+  // Auto-scroll on content change
+  React.useEffect(() => {
+    // Only auto-scroll if we were already near the bottom or it's a very short list
+    const container = scrollRef.current;
+    if (container) {
+      const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 300;
+      if (isNearBottom || container.scrollTop === 0) {
+        scrollToBottom('smooth');
+      }
+    }
+  }, [children]);
+
+  return (
+    <div className="flex flex-col h-full w-full bg-black text-white relative">
       {/* Content Area */}
-      <div className="flex-1 overflow-hidden relative flex flex-col">
+      <div 
+        ref={scrollRef}
+        onScroll={handleScroll}
+        className="flex-1 overflow-y-auto overflow-x-hidden relative flex flex-col pt-12 pb-24"
+      >
         {children}
       </div>
 
+      {/* Scroll to Bottom Button */}
+      {showScrollButton && (
+        <button
+          onClick={() => scrollToBottom('smooth')}
+          className="absolute bottom-32 left-1/2 -translate-x-1/2 w-10 h-10 bg-[#1a1a1a] border border-[#333333] rounded-full flex items-center justify-center text-white shadow-xl hover:bg-[#333333] transition-all z-[110]"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
+          </svg>
+        </button>
+      )}
+
       {/* Input Bar */}
       {inputBar && (
-        <div className="shrink-0 pb-6 px-4 md:px-0">
+        <div className="shrink-0 relative z-[100]">
           {inputBar}
         </div>
       )}

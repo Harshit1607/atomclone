@@ -1,4 +1,4 @@
-import { google } from '@ai-sdk/google';
+import { openai } from "@ai-sdk/openai";
 import { streamText } from "ai";
 import { SYSTEM_PROMPT } from "@/lib/constants";
 
@@ -8,9 +8,16 @@ export async function POST(req: Request) {
   const { messages } = await req.json();
 
   const result = await streamText({
-    model: google('gemini-1.5-flash'),
+    model: openai("gpt-4o-mini"),
     system: SYSTEM_PROMPT,
-    messages,
+    messages: messages.map((m: any) => {
+      const textPart = m.parts?.find((p: any) => p.type === "text");
+      const content = textPart?.text ?? m.content ?? "";
+      return {
+        role: m.role,
+        content: content,
+      };
+    }),
   });
 
   return result.toUIMessageStreamResponse();
