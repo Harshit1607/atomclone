@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useChat } from "@ai-sdk/react";
-import { HttpChatTransport } from "ai";
+import { DefaultChatTransport } from "ai";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 
@@ -14,16 +14,14 @@ export function useProtoChat({ apiEndpoint }: UseProtoChatOptions) {
   const sessionId = useSelector((state: RootState) => state.session.sessionId);
   const [input, setInput] = useState("");
 
-  const chat = useChat({
-    transport: new HttpChatTransport({
+  const { messages, sendMessage, setMessages, status } = useChat({
+    transport: new DefaultChatTransport({
       url: apiEndpoint,
       headers: {
         "x-session-id": sessionId,
       },
     }),
   });
-
-  const { messages, setMessages } = chat;
 
   // Hydrate from sessionStorage on mount or when sessionId changes
   useEffect(() => {
@@ -54,24 +52,24 @@ export function useProtoChat({ apiEndpoint }: UseProtoChatOptions) {
     setInput(e.target.value);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
     const msg = input;
     setInput("");
-    await chat.sendMessage({ role: "user", content: msg });
+    sendMessage({ role: "user", content: msg });
   };
 
-  const append = async (msg: { role: "user"; content: string }) => {
-    await chat.sendMessage(msg);
+  const append = (msg: { role: "user"; content: string }) => {
+    sendMessage(msg);
   };
 
   return {
-    ...chat,
+    messages,
     input,
     handleInputChange,
     handleSubmit,
     append,
-    isLoading: chat.status === "submitted" || chat.status === "streaming",
+    isLoading: status === "submitted" || status === "streaming",
   };
 }
